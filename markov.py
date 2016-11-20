@@ -28,10 +28,10 @@ def lambda_handler(event, context):
         if "value" not in event["request"]["intent"]["slots"]["issue"]:
             markov = requests.get('http://talk-to-obama.herokuapp.com/chat')
             markovDictionary = markov.json()
-            response = markovDictionary["content"]
+            response = " Quote: " + markovDictionary["content"] + " endquote."
             return build_speechlet_response("", response, True)
         else:
             markov = requests.get('http://talk-to-obama.herokuapp.com/chat?issue=' + event["request"]["intent"]["slots"]["issue"]["value"])
             markovDictionary = markov.json()
-            response = markovDictionary["prefacingText"] + markovDictionary["content"]
+            response = markovDictionary["prefacingText"] + " Quote: " + markovDictionary["content"] + " endquote."
             return build_speechlet_response("", response, True)
